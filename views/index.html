@@ -1,9 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>DELI-VERY</title>
-    </head>
-    <body>
-        <h1>Hello World!!!</h1>
-    </body>
+<head>
+  <!--importerar de adnra filerna-->
+
+  <script src="https://vuejs.org/js/vue.js"></script>
+  <script type="text/javascript" src="js/menu.json" defer></script>
+  <script src="js/vue_script.js" defer></script>
+  <script src="js/js_script.js" defer></script>
+
+
+  <link rel="stylesheet" type="text/css" href="css/StyleSheet.css">
+  <title>Crafty Burger</title> <!--Titel för flik-->
+  <meta charset="utf-8"/>
+</head>
+<body>
+  <main>
+
+    <header class="header">
+      <img class="CBheaderimage" src="https://cdn.pixabay.com/photo/2016/08/05/09/32/banner-1571873_1280.jpg"> <!--byt bild sen-->
+      <h1 class="CBheadertext">Crafty Burger</h1>
+    </header>
+
+    <section class="menu">
+      <h3>Välj hambugare</h3>
+      <p> Det är här du väljer din hamburgare</p>
+      <div class="wrapper" id="menuJS">
+
+        <!--Vue-loop-->
+        <div v-for="burger in burgers" >
+          <!-- Hur ska man göra för att få alleriinfon i fet stil på samma sätt som när vi gjorde listan i html?-->
+          <h5>{{ burger.productName }} </h5>
+          <img :src="burger.img" width="300px">
+          <ul class="burgerList">
+            <li> {{burger.information}} </li>
+            <li> Hamburgaren innehåller {{burger.calories}} kcal </li>
+            <li> Innehåller laktos: <span class="allergy">
+              {{burger.lactose}}</span>. Innehåller gluten:<span class="allergy"> {{burger.gluten}} </span> </li>
+          </ul>
+
+        </div>
+
+
+        <!--lista med burgarinfo-->
+        <!-- <div class="box a">
+        <h3>Fireburger</h3>
+        <img src="https://www.mathiaszachau.com/wp-content/uploads/2016/05/saftiga-hamburgare-e1463035643226.jpg"
+        width="300">
+        <ul>
+        <li>Kobebiff av högsta kvalitet!</li>
+        <li>Med ett täcke av riktigt fin ost (innehåller <span class=allergy>laktos</span>)</li>
+        <li>Kalljäst surdegsbröd (innehåller <span class=allergy> gluten </span>)</li>
+      </ul>
+    </div>
+
+    <div class="box b">
+    <h3>Fried Turkey Burger</h3>
+    <img src="https://files.ellematovin.se/uploads/sites/25/2017/03/IMG_5263-900x600.jpg"
+    width="300">
+    <ul>
+    <li>Friterad Svensk kalkon</li>
+    <li>Ett lager med gottigheter (innehåller <span class=allergy>laktos</span>)</li>
+    <li>Gottogottgott glutenfritt bröd</li>
+  </ul>
+</div>
+
+<div class="box c">
+<h3>Double Cheeseburger</h3>
+<img src="https://thumbs.dreamstime.com/z/dubbel-hamburgare-35432207.jpg"
+width="300">
+<ul>
+<li>Två lager av prima nötkött!</li>
+<li>Massor av god ost (innehåller <span class=allergy>laktos</span>)</li>
+<li>Ett extra gott bröd (innehåller <span class=allergy> gluten </span>)</li>
+</ul>
+</div>
+</div>-->
+</section>
+
+
+<!--Kundinformation/beställningar-->
+<section class="customerinfo">
+  <h3> Kundinformation</h3>
+  <span>Här skriver du den nödvändiga informationen</span>
+
+  <section id="conact">
+    <form>
+      <p>
+        <label for="Namn">Namn</label><br>
+        <input type="text" id="Namn" name="Namn" required="required" placeholder="Namn"
+      </p>
+      <p>
+        <label for="E-mail">E-mail</label><br>
+        <input type="text" id="E-mail" name="email" placeholder="E-mail">
+      </p>
+      <p>
+        <label for="Gata">Street</label><br>
+        <input type="text" id="Gata" name="Gata" placeholder="Gata">
+      </p>
+      <p>
+        <label for="Husnummer">Husnummer</label><br>
+        <input type="number" id="Husnummer" name="Husnummer" placeholder="Husnummer">
+      </p>
+      <p>
+
+        <!--lista med val-->
+        <label for="Betalningsform">Betalningsform</label><br>
+        <select id="mottagare" name="rcp">
+          <option> Betala med kort</option>
+          <option> Betala med faktura</option>
+          <option> Betala med din förstfödda</option>
+          <option>Betala med Klarna</option>
+        </select>
+      </p>
+      <p>
+        <!--Plupp-val -->
+        <label for="Kön">Kön</label><br>
+        <input type="radio" name="gender" value="male"> Man<br>
+        <input type="radio" name="gender" value="female"> Kvinna<br>
+        <input type="radio" name="gender" value="other"> Ingen av dessa <br>
+      </p>
+    </form>
+    <!--knapp-->
+    <p>
+<!-- KNAPP VUE  -->
+<div id="orders">
+    <button v-on:click="markDone()">Bekräfta beställning {{tempvar}}
+    <img src="http://clipartbarn.com/wp-content/uploads/2016/12/Green-tick-check-mark-tick-green-clipart.png" width="20">
+    </button>
+</div>
+
+  <!--  KNAPP JAVASCRIPT -->
+  <!--
+  <p>
+  <button type="submit" id="myButtonID"><img src="http://clipartbarn.com/wp-content/uploads/2016/12/Green-tick-check-mark-tick-green-clipart.png" width="20"> Bekräfta Beställning</button>
+    </p> -->
+
+  </section>
+</section>
+
+</main>
+<footer>
+  <hr>
+  Crafty Burger &copy;
+</footer>
+</body>
 </html>
