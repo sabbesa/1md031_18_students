@@ -34,7 +34,7 @@ Create a style.css file which contains:
 - [x] A rule to make the allergy information bold
 - [x] Different text and background color for the two different sections (burger selection and customer information)
 - [x] Change the cursor when hovering over the order button
-- [] Adds margins to the sections and the order button
+- [x] Adds margins to the sections and the order button
 - [x] Add a border to the two sections
 - [x] Create a header that palces an image behind the headline
 - [x] Use a grid layout instead of tables for the burger selection section
@@ -43,7 +43,7 @@ Create a style.css file which contains:
 ## 04 JavaScript <!--Börja här! Kom ihåg kommentaren om länken i index (rad 6)-->
 
 Create a menu.js file which contains:
-- [ ] At least five different burgers with respective attributes
+- [x] At least five different burgers with respective attributes
 
 Create a js_script.js file which contains:
 - [ ] A MenuItem constructor
@@ -55,10 +55,11 @@ Create a js_script.js file which contains:
 - [ ] A functionality for the order button that writes the information from the text boxes, the gender and all items on the order (that have the checkbox checked) to the bottom of the html file when the button is clicked
 
 Create a vue_script.js file which contains:
-- [ ] A function that loops through the array and inserts the information to the burger selection section of the index.html file
-- [ ] A function that loads the information from the menu.js json object and inserts the information to the burger selection section of the index.html file
+- [x] A function that loops through the array and inserts the information to the burger selection section of the index.html file
+- [x] A function that loads the information from the menu.js json object and inserts the information to the burger selection section of the index.html file
 - [ ] Only displays allergy information if relevant (either only if it contains gluten or lactose, or only if it's gluten or lactose free)
-- [ ] Add a checkbox to each menu item
+<!--Lägg till en if-loop här-->
+- [x] Add a checkbox to each menu item
 - [ ] A functionality for the order button that writes the information from the text boxes, the gender and all items on the order (that have the checkbox checked) to the bottom of the html file when the button is clicked
 
 ## 05 Messaging

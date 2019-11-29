@@ -7,14 +7,17 @@
   <script type="text/javascript" src="js/menu.json" defer></script>
   <script src="js/vue_script.js" defer></script>
   <script src="js/js_script.js" defer></script>
+  <script src="/socket.io/socket.io.js" defer></script>
+  <script src="js/deli-very.js" defer></script>
 
 
   <link rel="stylesheet" type="text/css" href="css/StyleSheet.css">
   <title>Crafty Burger</title> <!--Titel för flik-->
   <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-  <main>
+  <main id="menuJS">
 
     <header class="header">
       <img class="CBheaderimage" src="https://cdn.pixabay.com/photo/2016/08/05/09/32/banner-1571873_1280.jpg"> <!--byt bild sen-->
@@ -24,19 +27,20 @@
     <section class="menu">
       <h3>Välj hambugare</h3>
       <p> Det är här du väljer din hamburgare</p>
-      <div class="wrapper" id="menuJS">
+      <div class="wrapper" >
 
         <!--Vue-loop-->
         <div v-for="burger in burgers" >
-          <!-- Hur ska man göra för att få alleriinfon i fet stil på samma sätt som när vi gjorde listan i html?-->
           <h5>{{ burger.productName }} </h5>
           <img :src="burger.img" width="300px">
           <ul class="burgerList">
-            <li> {{burger.information}} </li>
-            <li> Hamburgaren innehåller {{burger.calories}} kcal </li>
-            <li> Innehåller laktos: <span class="allergy">
-              {{burger.lactose}}</span>. Innehåller gluten:<span class="allergy"> {{burger.gluten}} </span> </li>
+            <p> {{burger.information}} </p>
+            <li> Hamburgaren innehåller {{burger.kCal}} kcal </li>
+            <li v-if="burger.gluten"> Hamburgaren innehåller <span class="allergy">gluten </span></li>
+            <li v-if="burger.lactose"> Hamburgaren innehåller <span class="allergy">laktos </span></li>
+
           </ul>
+          <input type="checkbox" name="ordered" v-model="order.orderedBurger" v-bind:value="burger.productName"> Lägg i varukorg<br>
 
         </div>
 
@@ -75,6 +79,7 @@ width="300">
 </ul>
 </div>
 </div>-->
+
 </section>
 
 
@@ -84,28 +89,29 @@ width="300">
   <span>Här skriver du den nödvändiga informationen</span>
 
   <section id="conact">
+  <div id="orders">
     <form>
       <p>
-        <label for="Namn">Namn</label><br>
-        <input type="text" id="Namn" name="Namn" required="required" placeholder="Namn"
+        <label class="label" for="Namn">Namn</label><br>
+        <input v-model="order.name" class="input" type="text" id="Namn" name="Namn" required="required" placeholder="Namn">
       </p>
       <p>
-        <label for="E-mail">E-mail</label><br>
-        <input type="text" id="E-mail" name="email" placeholder="E-mail">
+        <label class="label" for="E-mail">E-mail</label><br>
+        <input v-model="order.email"class="input" type="text" id="email" name="email" placeholder="email">
+      </p>
+      <!-- <p>
+        <label class="label" for="Gata">Street</label><br>
+        <input v-model="order.street" calss="input" type="text" id="Gata" name="Gata" placeholder="Gata">
       </p>
       <p>
-        <label for="Gata">Street</label><br>
-        <input type="text" id="Gata" name="Gata" placeholder="Gata">
-      </p>
-      <p>
-        <label for="Husnummer">Husnummer</label><br>
-        <input type="number" id="Husnummer" name="Husnummer" placeholder="Husnummer">
-      </p>
+        <label class="label" for="Husnummer">Husnummer</label><br>
+        <input v-model="order.houseno" class="input" type="number" id="Husnummer" name="Husnummer" placeholder="Husnummer">
+      </p> -->
       <p>
 
         <!--lista med val-->
-        <label for="Betalningsform">Betalningsform</label><br>
-        <select id="mottagare" name="rcp">
+        <label class="input" for="Betalningsform">Betalningsform</label><br>
+        <select v-model="order.payment" id="mottagare" name="rcp">
           <option> Betala med kort</option>
           <option> Betala med faktura</option>
           <option> Betala med din förstfödda</option>
@@ -114,20 +120,40 @@ width="300">
       </p>
       <p>
         <!--Plupp-val -->
-        <label for="Kön">Kön</label><br>
-        <input type="radio" name="gender" value="male"> Man<br>
-        <input type="radio" name="gender" value="female"> Kvinna<br>
-        <input type="radio" name="gender" value="other"> Ingen av dessa <br>
+        <label class="input" for="Kön">Kön</label><br>
+        <input v-model="order.gender" type="radio" name="gender" value="male"> Man<br>
+        <input v-model="order.gender" type="radio" name="gender" value="female"> Kvinna<br>
+        <input v-model="order.gender" type="radio" name="gender" value="other"> Ingen av dessa <br>
       </p>
     </form>
-    <!--knapp-->
-    <p>
-<!-- KNAPP VUE  -->
-<div id="orders">
-    <button v-on:click="markDone()">Bekräfta beställning {{tempvar}}
+
+    <h1> Click in the map! </h1>
+    <a href="/dispatcher" target="_blank">Open dispatcher in new window</a>.
+    <div class="view-box">
+      <div id="dots" v-on:click="addOrder">
+          <div
+            v-for="(order, key) in orders"
+            v-bind:style="{ left: order.details.x + 'px', top: order.details.y + 'px'}">
+            {{key}}
+          </div>
+      </div>
+    </div>
+
+<!-- KNAPP VUE -->
+
+    <button v-on:click="markDone()"> Bekräfta beställning
     <img src="http://clipartbarn.com/wp-content/uploads/2016/12/Green-tick-check-mark-tick-green-clipart.png" width="20">
     </button>
 </div>
+<div id="ordereditems">
+  <p> Namn: {{order.name}} </p>
+  <p> Epost: {{order.email}} </p>
+   <p> Adress: {{order.street}}, {{order.houseno}}</p>
+  <p>Order: {{order.orderedBurger}} </p>
+
+
+</section>
+
 
   <!--  KNAPP JAVASCRIPT -->
   <!--
@@ -137,6 +163,8 @@ width="300">
 
   </section>
 </section>
+
+
 
 </main>
 <footer>
