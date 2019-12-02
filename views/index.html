@@ -5,10 +5,9 @@
 
   <script src="https://vuejs.org/js/vue.js"></script>
   <script type="text/javascript" src="js/menu.json" defer></script>
+  <script src="socket.io/socket.io.js" defer></script>
   <script src="js/vue_script.js" defer></script>
   <script src="js/js_script.js" defer></script>
-  <script src="/socket.io/socket.io.js" defer></script>
-  <script src="js/deli-very.js" defer></script>
   <link rel="stylesheet" href="css/deli-very.css">
 
 
@@ -23,19 +22,19 @@
   <main id="menuJS">
 
     <header class="header">
-      <img class="CBheaderimage" src="https://cdn.pixabay.com/photo/2016/08/05/09/32/banner-1571873_1280.jpg"> <!--byt bild sen-->
-      <h1 class="CBheadertext">Crafty Burger</h1>
+      <img class="CBheaderimage" src="https://i.pinimg.com/originals/82/06/b8/8206b87eb5604f8742634f73a30af986.jpg"> <!--byt bild sen-->
+      <h1 class="CBheadertext">Burger Barn</h1>
     </header>
 
     <section class="menu">
-      <h3>Välj hambugare</h3>
-      <p> Det är här du väljer din hamburgare</p>
+      <h2>Meny</h2>
+      <p> Vilken burgare vill du ska följa med dig hem?</p>
       <div class="wrapper" >
 
         <!--Vue-loop-->
         <div v-for="burger in burgers" >
-          <h5>{{ burger.productName }} </h5>
-          <img :src="burger.img" width="300px">
+          <h4>{{ burger.productName }} </h4>
+          <img :src="burger.img" width="350px" height ="250px">
           <ul class="burgerList">
             <p> {{burger.information}} </p>
             <li> Hamburgaren innehåller {{burger.kCal}} kcal </li>
@@ -43,7 +42,7 @@
             <li v-if="burger.lactose"> Hamburgaren innehåller <span class="allergy">laktos </span></li>
 
           </ul>
-          <input type="checkbox" name="ordered" v-model="order.orderedBurger" v-bind:value="burger.productName"> Lägg i varukorg<br>
+          <input class="checkbox" type="checkbox" name="ordered" v-model="order.orderedBurger" v-bind:value="burger.productName"> Lägg i varukorg<br>
 
         </div>
 
@@ -88,8 +87,8 @@ width="300">
 
 <!--Kundinformation/beställningar-->
 <section class="customerinfo">
-  <h3> Kundinformation</h3>
-  <span>Här skriver du den nödvändiga informationen</span>
+  <h3> Kunduppgifter</h3>
+  <span>Fyll i dina uppgifter här så burgaren hittar rätt! </span>
 
   <section id="conact">
   <div id="orders">
@@ -113,46 +112,48 @@ width="300">
       <p>
 
         <!--lista med val-->
-        <label class="input" for="Betalningsform">Betalningsform</label><br>
+        <label class="input" for="Betalningsform">Betalningssätt: </label><br>
         <select v-model="order.payment" id="mottagare" name="rcp">
-          <option> Betala med kort</option>
-          <option> Betala med faktura</option>
-          <option> Betala med din förstfödda</option>
-          <option>Betala med Klarna</option>
+          <option> Kort</option>
+          <option> Faktura</option>
+          <option> Blodoffer</option>
+          <option>Klarna</option>
         </select>
       </p>
       <p>
         <!--Plupp-val -->
         <label class="input" for="Kön">Kön</label><br>
-        <input v-model="order.gender" type="radio" name="gender" value="male"> Man<br>
+        <input v-model="order.gender" type="radio" name="gender" value="male"> Man <br>
         <input v-model="order.gender" type="radio" name="gender" value="female"> Kvinna<br>
-        <input v-model="order.gender" type="radio" name="gender" value="other"> Ingen av dessa <br>
+        <input v-model="order.gender" type="radio" name="gender" value="other"> Ickebinär <br>
+        <input v-model="order.gender" type="radio" name="gender" value="other"> Annat <br>
+        <input v-model="order.gender" type="radio" name="gender" value="other"> Vill ej ange <br>
       </p>
     </form>
 
-    <h1> Click in the map! </h1>
-    <a href="/dispatcher" target="_blank">Open dispatcher in new window</a>.
+    <h1> Låt oss veta var du bor! </h1>
+    <h5> Så vi vet var vi ska leverera din utsökta burgare!</h5>
+    <a href="/dispatcher" target="_blank">Öppna mottagarvyn i en ny flik</a>.
     <div class="view-box">
-      <div id="dots" v-on:click="addOrder">
-          <div
-            v-for="(order, key) in orders"
-            v-bind:style="{ left: order.details.x + 'px', top: order.details.y + 'px'}">
-            {{key}}
-          </div>
+      <div id="dots" v-on:click="displayOrder">
+        <div v-bind:style="{ left: details.x + 'px', top: details.y + 'px'}"> <!-- left: display.x osv -->
+          T
+        </div>
       </div>
     </div>
-
+   <!-- {{details}} -->
 <!-- KNAPP VUE -->
 
-    <button v-on:click="markDone()"> Bekräfta beställning
+    <button  v-on:click='addOrder' > Beställ min burgare!! <!-- Ska man lägga till en addOrder här?-->
     <img src="http://clipartbarn.com/wp-content/uploads/2016/12/Green-tick-check-mark-tick-green-clipart.png" width="20">
     </button>
 </div>
-<div id="ordereditems">
+<div v-if="isOpen" id="ordereditems">
   <p> Namn: {{order.name}} </p>
   <p> Epost: {{order.email}} </p>
-   <p> Adress: {{order.street}}, {{order.houseno}}</p>
-  <p>Order: {{order.orderedBurger}} </p>
+   <!--<p> Adress: {{order.street}}, {{order.houseno}}</p> -->
+  <p>Order: {{order.orderedBurger.join(", ")}} </p>
+</div>
 
 
 </section>
