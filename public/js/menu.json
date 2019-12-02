@@ -1,0 +1,46 @@
+
+
+var food = [
+  {
+  "productName": "Het Ostburgare",
+  "kCal": 850,
+  "lactose": true,
+  "gluten": false,
+  "img": "https://cdn.pixabay.com/photo/2016/03/05/19/02/abstract-1238247_1280.jpg",
+  "information": "En härlig orstburgare med lite extra capcasin. Passar perfekt om du vill krydda din dag"
+},
+{
+  "productName": "Kycklingburgare",
+  "kCal": 850,
+  "lactose": false,
+  "gluten": true,
+  "img": "https://cdn.pixabay.com/photo/2014/09/03/15/05/sandwich-434658_1280.jpg",
+  "information": "Svensk kyckling som inte går av för hackor. Full med grliga grönsaker som passar bra till det fräsha köttet"
+
+},
+{
+  "productName": "Halloumiburgare",
+  "kCal": 850,
+  "lactose": true,
+  "gluten": true,
+  "img": "https://cdn.pixabay.com/photo/2017/01/26/18/37/burger-2011303_1280.jpg",
+  "information":"Halloumiburgare med massor av smak. Passar alla som någonsin varit sugen på en hamburgare. Vegetarisk såklart!"
+
+},
+{
+  "productName": "Husets special",
+  "kCal": 850,
+  "lactose": false,
+  "gluten": false,
+  "img": "https://cdn.pixabay.com/photo/2016/03/05/19/08/abstract-1238262_1280.jpg",
+  "information": "Beställ den och du får veta varför den är döpt till special. God smak utlovas!"
+
+},
+{  "productName": "STSburgaren",
+  "kCal": 850,
+  "lactose": true,
+  "gluten": true,
+  "img": "https://cdn.pixabay.com/photo/2019/04/08/18/35/sandwich-4112566_1280.jpg",
+  "information": "Helt enkelt den bäSTSa hamburgaren på marknaden!"
+}
+]
